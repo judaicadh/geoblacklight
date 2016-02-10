@@ -15,6 +15,7 @@ group :development, :test do
   gem 'coveralls', require: false
   gem 'rubocop', '0.35.1', require: false
   gem 'rubocop-rspec', '1.3.1', require: false
+  gem 'xray-rails'
 end
 
 # BEGIN ENGINE_CART BLOCK

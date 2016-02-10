@@ -126,4 +126,11 @@ module GeoblacklightHelper
   rescue ActionView::MissingTemplate
     render partial: 'web_services_default', locals: { reference: reference }
   end
+
+  def render_collection_link(document)
+    if document["dc_type_s"] == 'Collection'
+      path = path_for_facet('dct_isPartOf_sm', document['dc_identifier_s'])
+      link_to 'Collection', path
+    end
+  end
 end

@@ -8,6 +8,26 @@ module Geoblacklight
                                                        .include?(:add_spatial_params)
     end
 
+    def hide_child_resources(solr_params)
+      return if show_action? || parent_search?
+      solr_params[:fq] ||= []
+      solr_params[:fq] << "!dct_isPartOf_sm:['' TO *]"
+      # solr_params[:fq] ||= []
+      # byebug
+    end
+
+    def self.show_actions
+      [:show]
+    end
+
+    def show_action?
+      self.class.show_actions.include? blacklight_params["action"].to_sym
+    end
+
+    def parent_search?
+      blacklight_params["f"]["dct_isPartOf_sm"]
+    end
+
     ##
     # Adds spatial parameters to a Solr query if :bbox is present.
     # @param [Blacklight::Solr::Request] solr_params :bbox should be in Solr
