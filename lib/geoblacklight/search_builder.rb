@@ -4,28 +4,15 @@ module Geoblacklight
 
     def initialize(processor_chain, scope)
       super(processor_chain, scope)
-      @processor_chain += [:add_spatial_params] unless @processor_chain
-                                                       .include?(:add_spatial_params)
+      @processor_chain += geoblacklight_search_methods
     end
-
-    def hide_child_resources(solr_params)
-      return if show_action? || parent_search?
-      solr_params[:fq] ||= []
-      solr_params[:fq] << "!dct_isPartOf_sm:['' TO *]"
-      # solr_params[:fq] ||= []
-      # byebug
-    end
-
-    def self.show_actions
-      [:show]
-    end
-
-    def show_action?
-      self.class.show_actions.include? blacklight_params["action"].to_sym
-    end
-
-    def parent_search?
-      blacklight_params["f"]["dct_isPartOf_sm"]
+    
+    ##
+    # List of request processing methods used in GeoBlacklight
+    # to generate Solr query parameters.
+    # @return Array
+    def geoblacklight_search_methods
+      [:add_spatial_params, :hide_child_resources, :show_child_resources]
     end
 
     ##
@@ -58,6 +45,52 @@ module Geoblacklight
     # @return [Geoblacklight::BoundingBox]
     def bounding_box
       Geoblacklight::BoundingBox.from_rectangle(blacklight_params[:bbox])
+    end
+
+    ## 
+    # Adds parameter to the Solr query that supresses objects that
+    # are children of Colletion objects. There is no supression
+    # during show actions and when the user facets on a collection.
+    # @param [Blacklight::Solr::Request]
+    # @return [Blacklight::Solr::Request]
+    def hide_child_resources(solr_params)
+      return if show_action? || parent_search
+      solr_params[:fq] ||= []
+      solr_params[:fq] << "!dct_isPartOf_sm:['' TO *]"
+    end
+
+    ## 
+    # Appends a dc_identifier query with an OR to a dct_isPartOf facet query.
+    # This allows the parent resource in a collection to appear in a 
+    # list with it's children. Does not occur during show actions.
+    # @param [Blacklight::Solr::Request]
+    # @return [Blacklight::Solr::Request]
+    def show_child_resources(solr_params)
+      return if show_action? || !parent_search
+      query = "dct_isPartOf_sm:#{parent_search[0]} " \
+              "OR dc_identifier_s:#{parent_search[0]}"
+      solr_params[:fq].map!{ |i| i[/^*.isPartOf.*$/] ? query : i }
+    end
+
+    ##
+    # Array of symbols for 'show' actions.
+    # @return Array
+    def self.show_actions
+      [:show]
+    end
+
+    ##
+    # Tests if current action param is a show action.
+    # @return Boolean
+    def show_action?
+      self.class.show_actions.include? blacklight_params["action"].to_sym
+    end
+
+    ##
+    # Return value of dct_isPartOf_sm facet request parameter.
+    # @return Array
+    def parent_search
+      blacklight_params["f"]["dct_isPartOf_sm"]
     end
   end
 end
