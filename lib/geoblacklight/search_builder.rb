@@ -61,8 +61,9 @@ module Geoblacklight
 
     ## 
     # Appends a dc_identifier query with an OR to a dct_isPartOf facet query.
-    # This allows the parent resource in a collection to appear in a 
-    # list with it's children. Does not occur during show actions.
+    # This allows the parent record in a collection to appear in a 
+    # list with it's children. Does not occur during show actions. Results are sorted
+    # by type so that the collection record appears at the top of the list.
     # @param [Blacklight::Solr::Request]
     # @return [Blacklight::Solr::Request]
     def show_child_resources(solr_params)
@@ -70,6 +71,7 @@ module Geoblacklight
       query = "dct_isPartOf_sm:#{parent_search[0]} " \
               "OR dc_identifier_s:#{parent_search[0]}"
       solr_params[:fq].map!{ |i| i[/^*.isPartOf.*$/] ? query : i }
+      solr_params[:sort].prepend "dc_type_s asc, "
     end
 
     ##
@@ -90,7 +92,7 @@ module Geoblacklight
     # Return value of dct_isPartOf_sm facet request parameter.
     # @return Array
     def parent_search
-      blacklight_params["f"]["dct_isPartOf_sm"]
+      blacklight_params["f"] && blacklight_params["f"]["dct_isPartOf_sm"]
     end
   end
 end
