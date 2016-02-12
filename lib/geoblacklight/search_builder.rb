@@ -6,7 +6,7 @@ module Geoblacklight
       super(processor_chain, scope)
       @processor_chain += geoblacklight_search_methods
     end
-    
+
     ##
     # List of request processing methods used in GeoBlacklight
     # to generate Solr query parameters.
@@ -47,7 +47,7 @@ module Geoblacklight
       Geoblacklight::BoundingBox.from_rectangle(blacklight_params[:bbox])
     end
 
-    ## 
+    ##
     # Adds parameter to the Solr query that supresses objects that
     # are children of Colletion objects. There is no supression
     # during show actions and when the user facets on a collection.
@@ -59,9 +59,9 @@ module Geoblacklight
       solr_params[:fq] << "!dct_isPartOf_sm:['' TO *]"
     end
 
-    ## 
+    ##
     # Appends a dc_identifier query with an OR to a dct_isPartOf facet query.
-    # This allows the parent record in a collection to appear in a 
+    # This allows the parent record in a collection to appear in a
     # list with it's children. Does not occur during show actions. Results are sorted
     # by type so that the collection record appears at the top of the list.
     # @param [Blacklight::Solr::Request]
@@ -70,8 +70,8 @@ module Geoblacklight
       return if show_action? || !parent_search
       query = "dct_isPartOf_sm:#{parent_search[0]} " \
               "OR dc_identifier_s:#{parent_search[0]}"
-      solr_params[:fq].map!{ |i| i[/^*.isPartOf.*$/] ? query : i }
-      solr_params[:sort].prepend "dc_type_s asc, "
+      solr_params[:fq].map! { |i| i[/^*.isPartOf.*$/] ? query : i }
+      solr_params[:sort].prepend 'dc_type_s asc, '
     end
 
     ##
@@ -85,14 +85,14 @@ module Geoblacklight
     # Tests if current action param is a show action.
     # @return Boolean
     def show_action?
-      self.class.show_actions.include? blacklight_params["action"].to_sym
+      self.class.show_actions.include? blacklight_params['action'].to_sym
     end
 
     ##
     # Return value of dct_isPartOf_sm facet request parameter.
     # @return Array
     def parent_search
-      blacklight_params["f"] && blacklight_params["f"]["dct_isPartOf_sm"]
+      blacklight_params['f'] && blacklight_params['f']['dct_isPartOf_sm']
     end
   end
 end
