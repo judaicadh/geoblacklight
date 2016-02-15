@@ -22,7 +22,7 @@
     "Sanborn"
   ],
   "dc_title_s": "Fire Insurance Map of Princeton, New Jersey (Sheet 1) (1911)",
-  "dc_type_s": "Collection",
+  "dc_type_s": "Image",
   "dct_spatial_sm": [
     "New Jersey",
     "Princeton"
@@ -32,5 +32,6 @@
   ],
   "georss_box_s": "40.330188 -74.683192 40.357893 -74.634633",
   "solr_geom": "ENVELOPE(-74.683192, -74.634633, 40.357893, 40.330188)",
-  "solr_year_i": 1911
+  "solr_year_i": 1911,
+  "dct_isPartOf_sm": ["fk4h70np6t"]
 }

@@ -1,0 +1,36 @@
+{
+  "uuid": "http://arks.princeton.edu/ark:/88435/fk4h70np6t",
+  "dc_creator_sm": [
+    "Sanborn Map Company"
+  ],
+  "dc_description_s": "This a Sanborn map of Princeton",
+  "dc_format_s": "Scanned Map",
+  "dc_identifier_s": "fk4h70np6t",
+  "dc_language_s": "English",
+  "dc_publisher_s": "New York: Sanborn Map Company",
+  "dc_rights_s": "Public",
+  "dct_provenance_s": "Princeton",
+  "dct_references_s": "{}",
+  "layer_id_s": "fk4h70np6t",
+  "layer_slug_s": "princeton-fk4h70np6t",
+  "layer_geom_type_s": "Image",
+  "layer_modified_dt": "2015-01-18T17:01:38Z",
+  "dc_subject_sm": [
+    "Boundaries",
+    "Structure",
+    "Fire Insurance",
+    "Sanborn"
+  ],
+  "dc_title_s": "Fire Insurance Map of Princeton, New Jersey, 1911",
+  "dc_type_s": "Collection",
+  "dct_spatial_sm": [
+    "New Jersey",
+    "Princeton"
+  ],
+  "dct_temporal_sm": [
+    "1911"
+  ],
+  "georss_box_s": "40.330188 -74.683192 40.357893 -74.634633",
+  "solr_geom": "ENVELOPE(-74.683192, -74.634633, 40.357893, 40.330188)",
+  "solr_year_i": 1911
+}

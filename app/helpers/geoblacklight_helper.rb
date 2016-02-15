@@ -127,14 +127,18 @@ module GeoblacklightHelper
     render partial: 'web_services_default', locals: { reference: reference }
   end
 
-  def psearch
+  def collection_parent?(document)
+    document['dc_type_s'] == 'Collection'
+  end
+
+  def collection_search?
     params['f'] && params['f']['dct_isPartOf_sm']
   end
 
   def collection_badge(document)
-    return unless document['dc_type_s'] == 'Collection'
+    return unless collection_parent?(document)
     path = path_for_facet('dct_isPartOf_sm', document['dc_identifier_s'])
-    if psearch
+    if collection_search?
       content_tag(:span, 'Collection', class: 'label label-warning')
     else
       link_to content_tag(:span,
