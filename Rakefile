@@ -43,7 +43,8 @@ task ci: ['geoblacklight:generate'] do
   # Run JavaScript tests
   Rake::Task['teaspoon'].invoke
 end
-
+spec = Gem::Specification.find_by_name 'geo_combine'
+load "#{spec.gem_dir}/lib/tasks/geo_combine.rake"
 namespace :geoblacklight do
   desc 'Run tests with coverage'
   task :coverage do

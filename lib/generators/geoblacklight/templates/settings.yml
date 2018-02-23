@@ -11,7 +11,7 @@ CARTO_ONECLICK_LINK: 'http://oneclick.cartodb.com/'
 GEOMETRY_FIELD: 'solr_geom'
 
 # The bq boost value for spatial search matches within a bounding box
-BBOX_WITHIN_BOOST: '10'
+BBOX_WITHIN_BOOST: '50'
 
 # Solr field mappings
 FIELDS:
@@ -24,17 +24,17 @@ FIELDS:
   :SPATIAL_COVERAGE: 'dct_spatial_sm'
   :SUBJECT: 'dc_subject_sm'
   :REFERENCES: 'dct_references_s'
-  :YEAR: 'solr_year_i'
+  :YEAR: 'dct_temporal_sm'
   :CREATOR: 'dc_creator_sm'
   :DESCRIPTION: 'dc_description_s'
-  :PUBLISHER: 'dc_publisher_s'
+  :PUBLISHER: 'dc_publisher_sm'
   :PART_OF: 'dct_isPartOf_sm'
   :TEMPORAL: 'dct_temporal_sm'
   :TITLE: 'dc_title_s'
   :SOURCE: 'dc_source_sm'
 
 # Institution deployed at
-INSTITUTION: 'Stanford'
+INSTITUTION: 'UPenn'
 
 # Metadata shown in tool panel
 METADATA_SHOWN:

@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 # Specify your gem's dependencies in geoblacklight.gemspec
 gemspec
-
+gem 'geo_combine'
 group :development, :test do
   # Peg simplecov to < 0.8 until this is resolved:
   # https://github.com/colszowka/simplecov/issues/281
